@@ -1,0 +1,36 @@
+name: Deploy API
+
+# Trigger workflow only when code in apps/api changes
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/api/**"
+      - ".github/workflows/deploy-api.yml" # also trigger if workflow file is updated
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - uses: actions/checkout@v3
+
+      # Setup Node.js environment
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # Setup pnpm package manager
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      # Install dependencies
+      - run: pnpm install
+
+      # Deploy API to Cloudflare Workers
+      - name: Deploy API
+        run: pnpm run deploy:api
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
