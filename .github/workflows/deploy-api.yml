@@ -7,6 +7,7 @@ on:
     paths:
       - "apps/api/**"
       - ".github/workflows/deploy-api.yml" # also trigger if workflow file is updated
+  workflow_dispatch: {}   # <-- allows manual trigger
 
 jobs:
   deploy:
