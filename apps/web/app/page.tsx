@@ -1,6 +1,9 @@
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
+import Video from "next-video";
+
+const getStarted = "/films/film_4bfe6b21/index.m3u8";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -66,6 +69,10 @@ export default function Home() {
         <Button appName="web" className={styles.secondary}>
           Open alert
         </Button>
+
+        <div>
+          <Video src={getStarted} />
+        </div>
       </main>
       <footer className={styles.footer}>
         <a
